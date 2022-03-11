@@ -1,6 +1,7 @@
 import os
 
 import django
+from django.forms import DateField, DateTimeField
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "projeto.settings")
 django.setup()
@@ -27,11 +28,16 @@ class ProdutoClass:
         aux = []
         for produto in produtos:
             data = dict(
-                produto=produto,
-                importado=choice((True, False)),
-                ncm=Utils.gen_digits(8),
-                preco=random() * randint(10, 50),
-                estoque=randint(10, 200),
+                equipamento=Utils.gen_digits(30),
+                grandeza=Utils.gen_digits(30),
+                chave_a=Utils.gen_digits(8),
+                chave_b=Utils.gen_digits(8),
+                chave_c=Utils.gen_digits(8),
+                ultima_leitura=DateTimeField,
+                leitura_anterior=DateField, 
+                diferenca=float, max_digits=7, decimal_places=2,
+                perc_diferenca=float, max_digits=7, decimal_places=2,
+                situacao=float, max_digits=7, decimal_places=2,
             )
             obj = Produto(**data)
             aux.append(obj)
@@ -39,22 +45,17 @@ class ProdutoClass:
 
 
 produtos = (
-    'Apontador',
-    'Caderno 100 folhas',
-    'Caderno capa dura 200 folhas',
-    'Caneta esferográfica azul',
-    'Caneta esferográfica preta',
-    'Caneta esferográfica vermelha',
-    'Durex',
-    'Giz de cera 12 cores',
-    'Lapiseira 0.3 mm',
-    'Lapiseira 0.5 mm',
-    'Lapiseira 0.7 mm',
-    'Lápis de cor 24 cores',
-    'Lápis',
-    'Papel sulfite A4 pacote 100 folhas',
-    'Pasta elástica',
-    'Tesoura',
+    'RE0997',
+    'AMP',
+    'A',
+    'B',
+    'C',
+    '2022-01-06 13:13:00',
+    '2022-01-06 13:00:00',
+    '29.22',
+    '7.34',
+    '1.15',
+    
 )
 
 tic = timeit.default_timer()

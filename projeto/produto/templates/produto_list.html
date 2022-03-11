@@ -20,7 +20,7 @@
   </div>
 
   <div class="page-header">
-    <h2>Lista de Produtos
+    <h2>Lista de Perdas de Cargas
       <span class="pull-right">
         <a href="{% url 'produto:produto_add' %}">
           <button type="button" class="btn btn-primary">
@@ -40,10 +40,16 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Importado</th>
-            <th>NCM</th>
-            <th>Produto</th>
-            <th>Preço</th>
+            <th>equipamento</th>
+            <th>grandeza</th>
+            <th>chave_a</th>
+            <th>chave_b</th>
+            <th>chave_c</th>
+            <th>ultima_leitura</th>
+            <th>leitura_anterior</th>
+            <th>diferenca</th>
+            <th>perc_diferenca</th>
+            <th>situacao</th>
             <th class="text-center">Estoque</th>
             <th class="text-center">Estoque mínimo</th>
           </tr>
@@ -51,20 +57,17 @@
         <tbody>
           {% for object in object_list %}
             <tr>
-              <td>
-                {% if object.importado %}
-                  <i class="fa fa-check-circle ok"></i>
-                {% else %}
-                  <i class="fa fa-minus-circle no"></i>
-                {% endif %}
-              </td>
-              <td>{{ object.ncm }}</td>
-              <td>
-                <a href="{{ object.get_absolute_url }}">{{ object.produto }}</a>
-              </td>
-              <td>R$ <span class="pull-right">{{ object.preco }}</span></td>
-              <td class="text-center">{{ object.estoque }}</td>
-              <td class="text-center">{{ object.estoque_minimo }}</td>
+              
+              <td class="text-center">{{ object.equipamento }}</td>
+              <td class="text-center">{{ object.grandeza}}</td>
+              <td class="text-center">{{ object.chave_a }}</td>
+              <td class="text-center">{{ object.chave_b }}</td>
+              <td class="text-center">{{ object.chave_c }}</td>
+              <td class="text-center">{{ object.ultima_leitura }}</td>
+              <td class="text-center">{{ object.leitura_anterior }}</td>
+              <td class="text-center">{{ object.diferenca }}</td>
+              <td class="text-center">{{ object.perc_diferenca }}</td>
+              <td class="text-center">{{ object.situacao }}</td>
             </tr>
           {% endfor %}
         </tbody>

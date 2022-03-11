@@ -1,6 +1,7 @@
 import csv
 import io
 from datetime import datetime
+from wsgiref.handlers import format_date_time
 
 import pandas as pd
 from django.contrib import messages
@@ -89,20 +90,29 @@ def save_data(data):
     '''
     aux = []
     for item in data:
-        produto = item.get('produto')
-        ncm = str(item.get('ncm'))
-        importado = True if item.get('importado') == 'True' else False
-        preco = item.get('preco')
-        estoque = item.get('estoque')
-        estoque_minimo = item.get('estoque_minimo')
+        #produto = item.get('produto')
+        equipamento = str(item.get('equipamento'))
+        grandeza = str(item.get('grandeza'))
+        chave_a = str(item.get('chave_a'))
+        chave_b = str(item.get('chave_b'))
+        chave_c = str(item.get('chave_c'))
+        ultima_leitura = str(item.get('ultima_leitura'))
+        leitura_anterior = str(item.get('leitura_anterior'))
+        diferenca = float(item.get('diferenca', max_digits=7, decimal_places=2))
+        perc_diferenca = float(item.get('perc_diferenca', max_digits=7, decimal_places=2))
+        situacao = float(item.get('situacao', max_digits=7, decimal_places=2))
         obj = Produto(
-            produto=produto,
-            ncm=ncm,
-            importado=importado,
-            preco=preco,
-            estoque=estoque,
-            estoque_minimo=estoque_minimo,
-        )
+            equipamento=equipamento,
+            grandeza=grandeza,
+            chave_a=chave_a,
+            chave_b=chave_b,
+            chave_c=chave_c,
+            ultima_leitura=ultima_leitura,
+            leitura_anterior=leitura_anterior,
+            diferenca=diferenca,
+            perc_diferenca=perc_diferenca,
+            situacao=situacao,
+            )
         aux.append(obj)
     Produto.objects.bulk_create(aux)
 
@@ -124,10 +134,10 @@ def import_csv(request):
 
 def export_csv(request):
     header = (
-        'importado', 'ncm', 'produto', 'preco', 'estoque', 'estoque_minimo',
+        'equipamento', 'grandeza', 'chave_a','chave_b', 'chave_c', 'ultima_leitura','leitura_anterior', 'diferenca', 'perc_diferenca','situcao',
     )
     produtos = Produto.objects.all().values_list(*header)
-    with open('fix/produtos_exportados.csv', 'w') as csvfile:
+    with open('fix/perda_carga.csv', 'w') as csvfile:
         produto_writer = csv.writer(csvfile)
         produto_writer.writerow(header)
         for produto in produtos:
@@ -137,45 +147,54 @@ def export_csv(request):
 
 
 def import_xlsx(request):
-    filename = 'fix/produtos.xlsx'
+    filename = 'fix/perda_carga.xlsx'
     action_import_xlsx(filename)
-    messages.success(request, 'Produtos importados com sucesso.')
+    messages.success(request, 'Perdas de carga importados com sucesso.')
     return HttpResponseRedirect(reverse('produto:produto_list'))
 
 
 def exportar_produtos_xlsx(request):
     MDATA = datetime.now().strftime('%Y-%m-%d')
     model = 'Produto'
-    filename = 'produtos_exportados.xlsx'
+    filename = 'perda_carga.xlsx'
     _filename = filename.split('.')
     filename_final = f'{_filename[0]}_{MDATA}.{_filename[1]}'
     queryset = Produto.objects.all().values_list(
-        'importado',
-        'ncm',
-        'produto',
-        'preco',
-        'estoque',
-        'estoque_minimo',
-        'categoria__categoria',
+        'equipamento', 
+        'grandeza', 
+        'chave_a',
+        'chave_b', 
+        'chave_c', 
+        'ultima_leitura',
+        'leitura_anterior', 
+        'diferenca', 
+        'perc_diferenca',
+        'situacao',
+       
     )
-    columns = ('Importado', 'NCM', 'Produto', 'Preço',
-               'Estoque', 'Estoque mínimo', 'Categoria')
+    columns = ('equipamento', 'grandeza', 'chave_a',
+              'chave_b', 'chave_c', 'ultima_leitura','leitura_anterior', 'diferenca', 'perc_diferenca','situacao' 'Categoria')
     response = export_xlsx(model, filename_final, queryset, columns)
     return response
 
 
 def import_csv_with_pandas(request):
-    filename = 'fix/produtos.csv'
+    filename = 'fix/perda_carga.csv'
     df = pd.read_csv(filename)
     aux = []
     for row in df.values:
         obj = Produto(
-            produto=row[0],
-            ncm=row[1],
-            importado=row[2],
-            preco=row[3],
-            estoque=row[4],
-            estoque_minimo=row[5],
+            equipamento=row[0],
+            grandeza=row[1],
+            chave_a=row[2],
+            chave_b=row[3],
+            chave_c=row[4],
+            ultima_leitura=row[5],
+            leitura_anterior=row[6],
+            difereca=row[7],
+            perc_difereca=row[8],
+            situacao=row[9],
+            
         )
         aux.append(obj)
     Produto.objects.bulk_create(aux)

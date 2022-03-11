@@ -1,6 +1,6 @@
 import xlrd
 
-from projeto.produto.models import Categoria, Produto
+from projeto.produto.models import Produto
 
 
 def import_xlsx(filename):
@@ -10,50 +10,36 @@ def import_xlsx(filename):
     workbook = xlrd.open_workbook(filename)
     sheet = workbook.sheet_by_index(0)
 
-    fields = ('produto', 'ncm', 'importado',
-              'preco', 'estoque', 'estoque_minimo')
+    fields = ('equipamento', 'grandeza', 'chave_a','chave_b', 'chave_c', 'ultima_leitura','leitura_anterior', 'diferenca', 'perc_diferenca','situacao')
 
-    categorias = []
-    for row in range(1, sheet.nrows):
-        categoria = sheet.row(row)[6].value
-        categorias.append(categoria)
-
-    categorias_unicas = [Categoria(categoria=categoria)
-                         for categoria in set(categorias) if categoria]
-
-    Categoria.objects.all().delete()  # CUIDADO
-    Categoria.objects.bulk_create(categorias_unicas)
-
+    
     aux = []
     for row in range(1, sheet.nrows):
-        produto = sheet.row(row)[0].value
-        ncm = int(sheet.row(row)[1].value)
-
-        _importado = sheet.row(row)[2].value
-        importado = True if _importado == 'True' else False
-
-        preco = sheet.row(row)[3].value
-        estoque = sheet.row(row)[4].value
-        estoque_minimo = sheet.row(row)[5].value
-
-        _categoria = sheet.row(row)[6].value
-        categoria = Categoria.objects.filter(categoria=_categoria).first()
+        equipamento = sheet.row(row)[0].value
+        grandeza = sheet.row(row)[1].value
+        chave_a = sheet.row(row)[2].value
+        chave_b = sheet.row(row)[3].value
+        chave_c = sheet.row(row)[4].value
+        ultima_leitura = sheet.row(row)[5].value
+        leitura_anterior = sheet.row(row)[6].value
+        diferenca = sheet.row(row)[7].value
+        perc_diferenca = sheet.row(row)[8].value
+        situacao = sheet.row(row)[9].value
+       
 
         produto = dict(
-            produto=produto,
-            ncm=ncm,
-            importado=importado,
-            preco=preco,
-            estoque=estoque,
-            estoque_minimo=estoque_minimo,
+            equipamento =equipamento,
+            grandeza=grandeza,
+            chave_a=chave_a,
+            chave_b=chave_b,
+            chave_c=chave_c,
+            ultima_leitura=ultima_leitura,
+            leitura_anterior=leitura_anterior,
+            diferenca=diferenca,
+            perc_diferenca=perc_diferenca,
+            situacao=situacao,
         )
 
-        if categoria:
-            obj = Produto(categoria=categoria, **produto)
-        else:
-            obj = Produto(**produto)
-
-        aux.append(obj)
-
+       
     Produto.objects.all().delete()  # CUIDADO
     Produto.objects.bulk_create(aux)

@@ -1,1 +1,1 @@
-$('#id_importado').removeClass('form-control');
+$('#id_equipamento').removeClass('form-control');

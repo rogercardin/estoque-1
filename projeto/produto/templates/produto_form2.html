@@ -8,55 +8,69 @@
     {% csrf_token %}
 
     <div class="form-group">
-      <label for="id_importado">
-
-        Importado
-
-      </label>
-      <input type="checkbox" name="importado" class="form-control" id="id_importado">
-
-    </div>
-
-    <div class="form-group">
       <label for="id_ncm">
 
-        <span class="required">NCM </span>
+        <span class="required">equipamento </span>
 
       </label>
-      <input type="text" name="ncm" maxlength="8" class="form-control" required id="id_ncm">
+      <input type="text" name="equipamento" maxlength="8" class="form-control" required id="id_equipamento">
 
     </div>
 
     <div class="form-group">
-      <label for="id_produto">
+      <label for="id_grandeza">
 
-        <span class="required">Produto </span>
+        <span class="required">grandeza </span>
 
       </label>
-      <input type="text" name="produto" maxlength="100" class="form-control" required id="id_produto">
+      <input type="text" name="grandeza" maxlength="100" class="form-control" required id="id_grandeza">
 
     </div>
 
     <div class="form-group">
-      <label for="id_preco">
+      <label for="id_chave_a">
 
-        <span class="required">Preço </span>
+        <span class="required">chave_a </span>
 
       </label>
-      <input type="number" name="preco" step="0.01" class="form-control" required id="id_preco">
+      <input type="number" name="chave_a" step="0.01" class="form-control" required id="id_chave_a">
 
     </div>
 
     <div class="form-group">
-      <label for="id_estoque">
+      <label for="id_chave_a">
 
-        <span class="required">Estoque atual </span>
+        <span class="required">chave_a </span>
 
       </label>
-      <input type="number" name="estoque" class="form-control" required id="id_estoque">
+      <input type="number" name="chave_a" step="0.01" class="form-control" required id="id_chave_a">
 
     </div>
 
+
+    <div class="form-group">
+      <label for="id_chave_b">
+
+        <span class="required">chave_b </span>
+
+      </label>
+      <input type="number" name="chave_b" step="0.01" class="form-control" required id="id_chave_b">
+
+    </div>
+
+
+    <div class="form-group">
+      <label for="id_chave_c">
+
+        <span class="required">chave_c </span>
+
+      </label>
+      <input type="number" name="chave_c" step="0.01" class="form-control" required id="id_chave_c">
+
+    </div>
+
+
+   
     <div class="form-group">
       <label for="id_estoque_minimo">
 
@@ -68,15 +82,78 @@
     </div>
 
     <div class="form-group">
-      <label for="id_data">
+      <label for="id_ultima_leitura">
 
-        Data
+        <span class="required">ultima_leitura </span>
 
       </label>
-      <input type="text" name="data" class="form-control" id="id_data">
+      <input type="number" name="ultima_leitura" step="0.01" class="form-control" required id="id_ultima_leitura">
+
+    </div>
+    <div class="form-group">
+      <label for="id_leitura_anterior">
+
+        <span class="required">ultima_leitura </span>
+
+      </label>
+      <input type="number" name="ultima_leitura" step="0.01" class="form-control" required id="id_ultima_leitura">
 
     </div>
 
+    <div class="form-group">
+      <label for="id_diferenca">
+
+        <span class="required">diferenca </span>
+
+      </label>
+      <input type="number" name="diferenca" step="0.01" class="form-control" required id="id_diferenca">
+
+    </div>
+
+    <div class="form-group">
+      <label for="id_perc_diferenca">
+
+        <span class="required">perc_diferenca </span>
+
+      </label>
+      <input type="number" name="perc_diferenca" step="0.01" class="form-control" required id="id_perc_diferenca">
+
+    </div>
+    <div class="form-group">
+      <label for="id_situacao">
+
+        <span class="required"> <div class="form-group">
+          <label for="id_perc_diferenca">
+    
+            <span class="required">perc_diferenca </span>
+    
+          </label>
+          <input type="number" name=" <div class="form-group">
+            <label for="id_perc_diferenca">
+      
+              <span class="required">perc_diferenca </span>
+      
+            </label>
+            <input type="number" name="perc_diferenca" step="0.01" class="form-control" required id="id_ <div class="form-group">
+              <label for="id_perc_diferenca">
+        
+                <span class="required">perc_diferenca </span>
+        
+              </label>
+              <input type="number" name="perc_diferenca" step="0.01" class="form-control" required id="id_perc_diferenca">
+        
+            </div>">
+      
+          </div>" step="0.01" class="form-control" required id="id_perc_diferenca">
+    
+        </div> </span>
+
+      </label>
+      <input type="number" name="perc_diferenca" step="0.01" class="form-control" required id="id_perc_diferenca">
+
+    </div>
+
+    
     <button type="submit" class="btn btn-success">Cadastrar</button>
   </form>
 

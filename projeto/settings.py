@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'projeto.core',
     'projeto.produto',
     'projeto.estoque',
+   
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ WSGI_APPLICATION = 'projeto.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+#USE_L10N = True
 
 DATABASES = {
     'default': {

@@ -5,7 +5,7 @@ import xlwt
 from django.contrib import admin
 from django.http import HttpResponse
 
-from .models import Categoria, Produto
+from .models import Produto
 
 MDATA = datetime.now().strftime('%Y-%m-%d')
 
@@ -14,15 +14,19 @@ MDATA = datetime.now().strftime('%Y-%m-%d')
 class ProdutoAdmin(admin.ModelAdmin):
     list_display = (
         '__str__',
-        'importado',
-        'ncm',
-        'preco',
-        'estoque',
-        'estoque_minimo',
-        'categoria',
+        'equipamento', 
+        'grandeza', 
+        'chave_a',
+        'chave_b', 
+        'chave_c', 
+        'ultima_leitura',
+        'leitura_anterior', 
+        'diferenca', 
+        'perc_diferenca',
+        'situacao',
+         
     )
     search_fields = ('produto',)
-    list_filter = ('importado',)
     actions = ('export_as_csv', 'export_as_xlsx')
 
     class Media:
@@ -54,13 +58,17 @@ class ProdutoAdmin(admin.ModelAdmin):
 
         meta = self.model._meta
         columns = (
-            'Importado',
-            'NCM',
-            'Produto',
-            'Preço',
-            'Estoque',
-            'Estoque mínimo',
-            'Categoria'
+            'equipamento', 
+            'grandeza', 
+            'chave_a',
+            'chave_b', 
+            'chave_c', 
+            'ultima_leitura',
+            'leitura_anterior', 
+            'diferenca', 
+            'perc_diferenca',
+            'situacao',
+           
         )
 
         response = HttpResponse(content_type='application/ms-excel')
@@ -81,13 +89,17 @@ class ProdutoAdmin(admin.ModelAdmin):
         default_style = xlwt.XFStyle()
 
         rows = queryset.values_list(
-            'importado',
-            'ncm',
-            'produto',
-            'preco',
-            'estoque',
-            'estoque_minimo',
-            'categoria__categoria',
+            'equipamento', 
+            'grandeza', 
+            'chave_a',
+            'chave_b', 
+            'chave_c', 
+            'ultima_leitura',
+            'leitura_anterior', 
+            'diferenca', 
+            'perc_diferenca',
+            'situacao',
+            
         )
         for row, rowdata in enumerate(rows):
             row_num += 1
@@ -100,7 +112,4 @@ class ProdutoAdmin(admin.ModelAdmin):
     export_as_xlsx.short_description = "Exportar XLSX"
 
 
-@admin.register(Categoria)
-class CategoriaAdmin(admin.ModelAdmin):
-    list_display = ('__str__', )
-    search_fields = ('categoria',)
+

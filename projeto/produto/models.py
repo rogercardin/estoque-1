@@ -1,28 +1,20 @@
+from datetime import datetime
 from django.db import models
 from django.urls import reverse_lazy
 
-
 class Produto(models.Model):
-    importado = models.BooleanField(default=False)
-    ncm = models.CharField('NCM', max_length=8)
-    produto = models.CharField(max_length=100, unique=True)
-    preco = models.DecimalField('preço', max_digits=7, decimal_places=2)
-    estoque = models.IntegerField('estoque atual')
-    estoque_minimo = models.PositiveIntegerField('estoque mínimo', default=0)
-    data = models.DateField(null=True, blank=True)
-    categoria = models.ForeignKey(
-        'Categoria',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-
-    class Meta:
-        ordering = ('produto',)
-
-    def __str__(self):
-        return self.produto
-
+    equipamento = models.CharField(max_length=30)
+    grandeza = models.CharField(max_length=30)
+    chave_a = models.CharField(max_length=30, unique=True)
+    chave_b = models.CharField(max_length=30)
+    chave_c = models.CharField(max_length=30)
+    ultima_leitura = models.CharField(max_length=30)
+    leitura_anterior = models.CharField(max_length=30)
+    diferenca = models.DecimalField('diferenca', max_digits=7, decimal_places=2)
+    perc_diferenca = models.DecimalField('perc_diferenca', max_digits=7, decimal_places=2)
+    situacao = models.DecimalField('situacao', max_digits=7, decimal_places=2)
+    
+    
     def get_absolute_url(self):
         return reverse_lazy('produto:produto_detail', kwargs={'pk': self.pk})
 
@@ -34,11 +26,4 @@ class Produto(models.Model):
         }
 
 
-class Categoria(models.Model):
-    categoria = models.CharField(max_length=100, unique=True)
 
-    class Meta:
-        ordering = ('categoria',)
-
-    def __str__(self):
-        return self.categoria
