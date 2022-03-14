@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 class Produto(models.Model):
     equipamento = models.CharField(max_length=30)
     grandeza = models.CharField(max_length=30)
-    chave_a = models.CharField(max_length=30, unique=True)
+    chave_a = models.CharField(max_length=30)
     chave_b = models.CharField(max_length=30)
     chave_c = models.CharField(max_length=30)
     ultima_leitura = models.CharField(max_length=30)
